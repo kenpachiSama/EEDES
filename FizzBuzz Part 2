@@ -1,0 +1,40 @@
+def fizz(numero):
+   
+    if numero % 3 == 0 or str(numero).find("3") != -1:
+        return True
+    return False
+
+
+def buzz(numero):
+  
+    if numero % 5 == 0 or str(numero).find("5") != -1:
+        return True
+    return False
+
+
+def fizzbuzz(numero):
+    
+    if numero % 3 == 0 and numero % 5 == 0:
+        return True
+    return False
+
+
+def comprobar_numero(numero):
+   
+    if fizzbuzz(numero):
+        return "fizzbuzz"
+    elif fizz(numero):
+        return "fizz"
+    elif buzz(numero):
+        return "buzz"
+    return str(numero)
+
+
+if __name__ == "__main__":
+    print(fizz(32))
+    print(buzz(52))
+    print(fizzbuzz(15))
+    
+    for n in range(1, 101):
+        print(comprobar_numero(n))
+    
