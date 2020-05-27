@@ -1,0 +1,22 @@
+from parte2.fizz_buzz import *
+import pytest
+
+def test_divisores_de_3():
+    
+    assert fizz(3) == True
+
+def test_divisores_de_5():
+ 
+    assert buzz(32) == True
+
+
+def test_divisores_de_3y5():
+  
+    assert fizzbuzz(52) == True
+
+
+def test_comprobar_numero():
+
+    assert comprobar_numero(1) == "1"
+    assert comprobar_numero(45) == "fizzbuzz"
+    assert comprobar_numero(99) == "fizz"
