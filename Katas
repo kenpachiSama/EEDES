@@ -1,0 +1,64 @@
+class Yahtzee:
+
+    def __init__(self, dice):
+        if isinstance(dice, tuple):
+            self.dice = [die for die in dice]
+        else:
+            self.dice = dice
+
+    def chance(self):
+        return sum(self.dice)
+
+    def yahtzee(self):
+        for die in self.dice:
+            if self.dice.count(die) == 5:
+                return 50
+        return 0
+
+    def sum_number(self, number):
+        filtered_numbers = [die for die in self.dice if die == number]
+        return sum(filtered_numbers)
+
+    def pairs(self, quantity):
+        repetitions = quantity * 2
+        found_pairs = []
+        score = 0
+        for die in sorted(self.dice, reverse=True):
+            if self.dice.count(die) / 2 == quantity:
+                return die * repetitions
+            elif self.dice.count(die) / 2 >= 1 and die not in found_pairs:
+                found_pairs.append(die)
+                score += die * 2
+                self.dice.remove(die)
+                if len(found_pairs) == quantity:
+                    return score
+        return 0
+
+    def repetitions(self, quantity):
+        for die in self.dice:
+            if self.dice.count(die) >= quantity:
+                return die*quantity
+        return 0
+
+    def straight(self):
+        small = [x for x in range(1, 6)]
+        large = [x for x in range(2, 7)]
+
+        if sorted(self.dice) == small:
+            return 15
+        elif sorted(self.dice) == large:
+            return 20
+        else:
+            return 0
+
+    def full_house(self):
+        selected = []
+        sum = 0
+        for n in range(len(self.dice)):
+            die = self.dice[n]
+            if self.dice.count(die) == 3 and die not in selected:
+                sum += (n + 1) * 3
+                selected.append(die)
+            elif self.dice.count(die) == 2 and die not in selected:
+                sum += (n + 1) * 2
+        return sum
