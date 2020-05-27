@@ -1,0 +1,97 @@
+from yahtzee import Yahtzee
+
+
+# These unit tests can be run using the py.test framework
+# available from http://pytest.org/
+
+
+def test_chance_scores_sum_of_all_dice():
+    expected = 15
+    actual = Yahtzee((2, 3, 4, 5, 1)).chance()
+    assert expected == actual
+    assert 16 == Yahtzee((3, 3, 4, 5, 1)).chance()
+
+
+def test_yahtzee_scores_50():
+    expected = 50
+    actual = Yahtzee([4, 4, 4, 4, 4]).yahtzee()
+    assert expected == actual
+    assert 50 == Yahtzee([6, 6, 6, 6, 6]).yahtzee()
+    assert 0 == Yahtzee([6, 6, 6, 6, 3]).yahtzee()
+
+
+def test_1s():
+    assert Yahtzee((1, 2, 3, 4, 5)).sum_number(1) == 1
+    assert 2 == Yahtzee((1, 2, 1, 4, 5)).sum_number(1)
+    assert 0 == Yahtzee((6, 2, 2, 4, 5)).sum_number(1)
+    assert 4 == Yahtzee((1, 2, 1, 1, 1)).sum_number(1)
+
+
+def test_2s():
+    assert 4 == Yahtzee((1, 2, 3, 2, 6)).sum_number(2)
+    assert 10 == Yahtzee((2, 2, 2, 2, 2)).sum_number(2)
+
+
+def test_threes():
+    assert 6 == Yahtzee((1, 2, 3, 2, 3)).sum_number(3)
+    assert 12 == Yahtzee((2, 3, 3, 3, 3)).sum_number(3)
+
+
+def test_fours_test():
+    assert 12 == Yahtzee((4, 4, 4, 5, 5)).sum_number(4)
+    assert 8 == Yahtzee((4, 4, 5, 5, 5)).sum_number(4)
+    assert 4 == Yahtzee((4, 5, 5, 5, 5)).sum_number(4)
+
+
+def test_fives():
+    assert 10 == Yahtzee((4, 4, 4, 5, 5)).sum_number(5)
+    assert 15 == Yahtzee((4, 4, 5, 5, 5)).sum_number(5)
+    assert 20 == Yahtzee((4, 5, 5, 5, 5)).sum_number(5)
+
+
+def test_sixes_test():
+    assert 0 == Yahtzee((4, 4, 4, 5, 5)).sum_number(6)
+    assert 6 == Yahtzee((4, 4, 6, 5, 5)).sum_number(6)
+    assert 18 == Yahtzee((6, 5, 6, 6, 5)).sum_number(6)
+
+
+def test_one_pair():
+    assert 6 == Yahtzee((3, 4, 3, 5, 6)).pairs(1)
+    assert 10 == Yahtzee((5, 3, 3, 3, 5)).pairs(1)
+    assert 12 == Yahtzee((5, 3, 6, 6, 5)).pairs(1)
+
+
+def test_two_pair():
+    assert 16 == Yahtzee((3, 3, 5, 4, 5)).pairs(2)
+    assert 18 == Yahtzee((3, 3, 6, 6, 6)).pairs(2)
+    assert 0 == Yahtzee((3, 3, 6, 5, 4)).pairs(2)
+
+
+def test_three_of_a_kind():
+    assert 9 == Yahtzee((3, 3, 3, 4, 5)).repetitions(3)
+    assert 15 == Yahtzee((5, 3, 5, 4, 5)).repetitions(3)
+    assert 9 == Yahtzee((3, 3, 3, 3, 5)).repetitions(3)
+
+
+def test_four_of_a_knd():
+    assert 12 == Yahtzee((3, 3, 3, 3, 5)).repetitions(4)
+    assert 20 == Yahtzee((5, 5, 5, 4, 5)).repetitions(4)
+    assert 12 == Yahtzee((3, 3, 3, 3, 3)).repetitions(4)
+    assert 0 == Yahtzee((3, 3, 3, 2, 1)).repetitions(4)
+
+
+def test_small_straight():
+    assert 15 == Yahtzee((1, 2, 3, 4, 5)).straight()
+    assert 15 == Yahtzee((2, 3, 4, 5, 1)).straight()
+    assert 0 == Yahtzee((1, 2, 2, 4, 5)).straight()
+
+
+def test_large_straight():
+    assert 20 == Yahtzee((6, 2, 3, 4, 5)).straight()
+    assert 20 == Yahtzee((2, 3, 4, 5, 6)).straight()
+    assert 0 == Yahtzee((1, 2, 2, 4, 5)).straight()
+
+
+def test_full_house():
+    assert 18 == Yahtzee((6, 2, 2, 2, 6)).full_house()
+    assert 0 == Yahtzee((2, 3, 4, 5, 6)).full_house()
